@@ -1,9 +1,10 @@
-import './App.css'
-
 import React from 'react'
+import Tiermaker from './Tiermaker'
 
-function App() {
-  return <div>app</div>
-}
+const App = () => (
+  <div className="app">
+    <Tiermaker />
+  </div>
+)
 
 export default App

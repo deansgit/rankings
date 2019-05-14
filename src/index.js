@@ -1,4 +1,4 @@
-import './app.css'
+import './app.scss'
 
 import App from './app'
 import React from 'react'
