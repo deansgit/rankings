@@ -1,4 +1,4 @@
-import { arrayMove } from '../../util'
+import { arrayInsert, arrayMove } from '../../util'
 
 function reducer(state, action) {
   switch (action.type) {
@@ -43,6 +43,19 @@ function reducer(state, action) {
           return copy
         }
       }
+    }
+    case 'ADD_ROW': {
+      let copy = [...state]
+      const index = copy.findIndex(r => r.name === action.rowName)
+      const newRow = { name: 'New Row', color: 'grey', items: [] }
+      let insertIndex
+      if (action.direction === 'above') {
+        insertIndex = index
+      } else if (action.direction === 'below') {
+        insertIndex = index + 1
+      }
+      const updated = arrayInsert(state, insertIndex, newRow)
+      return updated
     }
     case 'MOVE_ROW': {
       const copy = [...state]

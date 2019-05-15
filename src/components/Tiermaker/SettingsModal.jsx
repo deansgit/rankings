@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react'
+import { func, string } from 'prop-types'
 
 import { MdSettings } from 'react-icons/md'
 import Modal from '../generic/Modal'
 import { SketchPicker } from 'react-color'
 import { TiermakerContext } from './Tiermaker'
-import { string } from 'prop-types'
 
 function SettingsModal({ rowName }) {
   const [modalOpen, setModalOpen] = useState(false)
@@ -32,7 +32,7 @@ SettingsModal.propTypes = {
   rowName: string.isRequired
 }
 
-function Content({ rowName }) {
+function Content({ setModalOpen, rowName }) {
   const { dispatch, data } = useContext(TiermakerContext)
   // console.log('data', data)
   // const inputRef = useRef(null)
@@ -41,6 +41,10 @@ function Content({ rowName }) {
   //   if (inputRef.current) inputRef.current.focus()
   // })
 
+  const addRow = direction => {
+    dispatch({ type: 'ADD_ROW', rowName, direction })
+    setModalOpen(false)
+  }
   const removeRow = () => dispatch({ type: 'REMOVE_ROW', rowName })
   const clearRow = () => dispatch({ type: 'CLEAR_ROW', rowName })
   const renameRow = e => {
@@ -66,6 +70,8 @@ function Content({ rowName }) {
     <div>
       {rowName}
       <div>
+        <button onClick={() => addRow('above')}>Add row above</button>
+        <button onClick={() => addRow('below')}>Add row below</button>
         <button onClick={() => removeRow()}>Remove row</button>
         <button onClick={() => clearRow()}>Clear row</button>
         <div>
@@ -85,6 +91,7 @@ function Content({ rowName }) {
 }
 
 Content.propTypes = {
+  setModalOpen: func.isRequired,
   rowName: string.isRequired
 }
 
