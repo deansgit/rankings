@@ -32,9 +32,9 @@ const IMAGE_LIST = [
   'https://i.imgur.com/bHFXkc2.png'
 ]
 
-function createInitialState(imageList) {
+export function createInitialState() {
   const data = []
-  const defaultArea = imageList.map((url, i) => {
+  const defaultArea = IMAGE_LIST.map((url, i) => {
     return { name: `Item ${i + 1}`, image: url }
   })
   data.push(defaultArea)
@@ -48,7 +48,7 @@ function createInitialState(imageList) {
   return data
 }
 
-export const initialState = createInitialState(IMAGE_LIST)
+const initialState = createInitialState()
 
 function Tiermaker() {
   const [data, dispatch] = useReducer(reducer, initialState)
@@ -74,7 +74,12 @@ function Tiermaker() {
 
   return (
     <TiermakerContext.Provider value={{ dispatch, data }}>
-      <button onClick={() => dispatch({ type: 'RESET' })}>Reset</button>
+      <button
+        className="reset-button"
+        onClick={() => dispatch({ type: 'RESET' })}
+      >
+        Reset
+      </button>
       <DragDropContext onDragEnd={onDragEnd}>
         <div className="container">
           {tail(data).map(({ name, color, items }, i) => (

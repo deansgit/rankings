@@ -1,7 +1,12 @@
 import { arrayInsert, arrayMove } from '../../util'
 
+import { createInitialState } from './Tiermaker'
+
 function reducer(state, action) {
   switch (action.type) {
+    case 'RESET': {
+      return createInitialState()
+    }
     case 'MOVE_ITEM': {
       const { destination, source } = action.dragInfo
       const toRow = state.findIndex(r => r.name === destination.droppableId)
