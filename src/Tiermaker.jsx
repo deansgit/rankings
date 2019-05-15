@@ -1,8 +1,14 @@
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
-import { MdExpandLess, MdExpandMore } from 'react-icons/md'
+import { MdExpandLess, MdExpandMore, MdSettings } from 'react-icons/md'
 import React, { useState } from 'react'
 
 import mockData from './mockData.json'
+
+function tail(array) {
+  const copy = [...array]
+  copy.shift()
+  return copy
+}
 
 function arrayMove(array, moveIndex, toIndex) {
   /* #move - Moves an array item from one position in an array to another.
@@ -41,25 +47,55 @@ function arrayMove(array, moveIndex, toIndex) {
 function Tiermaker() {
   const [data, setData] = useState(mockData)
 
-  const onDragEnd = result => {
-    if (!result.destination) {
+  const onDragEnd = dragInfo => {
+    if (!dragInfo.destination) {
       return
     }
-    const toRow = data.findIndex(r => r.name === result.destination.droppableId)
-    const fromRow = data.findIndex(r => r.name === result.source.droppableId)
-    const toIndex = result.destination.index
-    const fromIndex = result.source.index
+    console.log('dragInfo', dragInfo)
+    const toRow = data.findIndex(
+      r => r.name === dragInfo.destination.droppableId
+    )
+    const fromRow = data.findIndex(r => r.name === dragInfo.source.droppableId)
+    const toIndex = dragInfo.destination.index
+    const fromIndex = dragInfo.source.index
 
-    if (fromRow !== toRow) {
-      const copy = [...data]
-      const itemToMove = copy[fromRow].items[fromIndex]
-      copy[toRow].items.splice(toIndex, 0, itemToMove)
-      copy[fromRow].items.splice(fromIndex, 1)
-      setData(copy)
+    if (
+      dragInfo.source.droppableId === 'default' ||
+      dragInfo.destination.droppableId === 'default'
+    ) {
+      // Moving within default area
+      if (fromRow !== toRow) {
+        if (dragInfo.destination.droppableId !== 'default') {
+          const copy = [...data]
+          const itemToMove = copy[0][fromIndex]
+          copy[toRow].items.splice(toIndex, 0, itemToMove)
+          copy[0].splice(fromIndex, 1)
+          setData(copy)
+        } else {
+          const copy = [...data]
+          const itemToMove = copy[fromRow].items[fromIndex]
+          copy[0].splice(toIndex, 0, itemToMove)
+          copy[fromRow].items.splice(fromIndex, 1)
+          setData(copy)
+        }
+      } else {
+        const copy = [...data]
+        copy[0] = arrayMove(copy[0], fromIndex, toIndex)
+        setData(copy)
+      }
     } else {
-      const copy = [...data]
-      copy[toRow].items = arrayMove(copy[toRow].items, fromIndex, toIndex)
-      setData(copy)
+      // moving outside default area
+      if (fromRow !== toRow) {
+        const copy = [...data]
+        const itemToMove = copy[fromRow].items[fromIndex]
+        copy[toRow].items.splice(toIndex, 0, itemToMove)
+        copy[fromRow].items.splice(fromIndex, 1)
+        setData(copy)
+      } else {
+        const copy = [...data]
+        copy[toRow].items = arrayMove(copy[toRow].items, fromIndex, toIndex)
+        setData(copy)
+      }
     }
   }
 
@@ -86,7 +122,7 @@ function Tiermaker() {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="container">
-        {data.map(({ name, color, items }, i) => (
+        {tail(data).map(({ name, color, items }, i) => (
           <RowContainer
             name={name}
             color={color}
@@ -98,9 +134,34 @@ function Tiermaker() {
           />
         ))}
       </div>
+      <DefaultArea items={data[0]} />
     </DragDropContext>
   )
 }
+
+const DefaultArea = ({ items }) => (
+  <div className="default-container">
+    <Droppable droppableId="default" direction="horizontal">
+      {(provided, snapshot) => (
+        <div
+          className="default-container__content"
+          {...provided.droppableProps}
+          ref={provided.innerRef}
+        >
+          {items.map((item, i) => (
+            <Item
+              index={i}
+              name={item.name}
+              imageUrl={item.image}
+              key={`item-${i}`}
+            />
+          ))}
+          {provided.placeholder}
+        </div>
+      )}
+    </Droppable>
+  </div>
+)
 
 const RowContainer = ({ name, color, items, moveRow, rowIndex, totalRows }) => (
   <div className="row">
@@ -157,12 +218,21 @@ const Item = ({ index, name, imageUrl }) => (
 function ItemSettings({ name, moveRow, rowIndex, totalRows }) {
   const moveRowUp = () => moveRow(name, 'up')
   const moveRowDown = () => moveRow(name, 'down')
+  const openSettingsModal = () => {
+    console.log('openSettingsModal', { name })
+  }
 
   const canMoveUp = rowIndex !== 0
   const canMoveDown = rowIndex !== totalRows - 1
   return (
     <div className="item-settings">
-      {/* <div>Settings</div> */}
+      <div>
+        <MdSettings
+          size={25}
+          onClick={() => openSettingsModal(name)}
+          className="item-settings__modal-button"
+        />
+      </div>
       <div className="item-settings__controls">
         {canMoveUp && (
           <MdExpandLess

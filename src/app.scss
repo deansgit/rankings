@@ -51,14 +51,22 @@ body {
 .item-settings {
   display: flex;
   align-items: center;
-  width: 30px;
   margin-left: auto;
   background-color: #1b1b1b;
   padding: 10px;
   color: #989898;
 
+  &__modal-button {
+    padding: 0 10px;
+
+    &:hover {
+      cursor: pointer;
+      color: white;
+    }
+  }
+
   &__controls {
-    // background-color: green;
+    width: 30px;
   }
 
   &__icon {
@@ -70,9 +78,15 @@ body {
 }
 
 .default-container {
-  display: flex;
+  // display: flex;
   border: solid 2px black;
   margin-top: 20px;
-  background-color: grey;
-  min-height: 100px;
+  background-color: #232323;
+  height: 100px;
+
+  &__content {
+    display: flex;
+    width: 100%;
+    height: 100%;
+  }
 }
