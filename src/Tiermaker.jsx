@@ -1,4 +1,5 @@
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
+import { MdExpandLess, MdExpandMore } from 'react-icons/md'
 import React, { useState } from 'react'
 
 import mockData from './mockData.json'
@@ -62,6 +63,26 @@ function Tiermaker() {
     }
   }
 
+  const moveRow = (rowName, direction) => {
+    const copy = [...data]
+    const rowToMoveIndex = copy.findIndex(r => r.name === rowName)
+    if (rowToMoveIndex === 0 && direction === 'up') {
+      return
+    } else if (rowToMoveIndex === copy.length - 1 && direction === 'down') {
+      return
+    } else {
+      let newRowIndex
+      if (direction === 'up') {
+        newRowIndex = rowToMoveIndex - 1
+      }
+      if (direction === 'down') {
+        newRowIndex = rowToMoveIndex + 1
+      }
+      const rearranged = arrayMove(copy, rowToMoveIndex, newRowIndex)
+      setData(rearranged)
+    }
+  }
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="container">
@@ -70,6 +91,9 @@ function Tiermaker() {
             name={name}
             color={color}
             items={items}
+            moveRow={moveRow}
+            rowIndex={i}
+            totalRows={data.length}
             key={`row-${i}`}
           />
         ))}
@@ -78,7 +102,7 @@ function Tiermaker() {
   )
 }
 
-const RowContainer = ({ name, color, items }) => (
+const RowContainer = ({ name, color, items, moveRow, rowIndex, totalRows }) => (
   <div className="row">
     <div className="label" style={{ backgroundColor: color }}>
       {name}
@@ -102,7 +126,12 @@ const RowContainer = ({ name, color, items }) => (
         </div>
       )}
     </Droppable>
-    <ItemSettings />
+    <ItemSettings
+      name={name}
+      moveRow={moveRow}
+      rowIndex={rowIndex}
+      totalRows={totalRows}
+    />
   </div>
 )
 
@@ -125,14 +154,33 @@ const Item = ({ index, name, imageUrl }) => (
   </Draggable>
 )
 
-const ItemSettings = () => (
-  <div className="item-settings">
-    <div>Settings</div>
-    <div className="item-settings__controls">
-      <div>up</div>
-      <div>down</div>
+function ItemSettings({ name, moveRow, rowIndex, totalRows }) {
+  const moveRowUp = () => moveRow(name, 'up')
+  const moveRowDown = () => moveRow(name, 'down')
+
+  const canMoveUp = rowIndex !== 0
+  const canMoveDown = rowIndex !== totalRows - 1
+  return (
+    <div className="item-settings">
+      {/* <div>Settings</div> */}
+      <div className="item-settings__controls">
+        {canMoveUp && (
+          <MdExpandLess
+            size={30}
+            onClick={() => moveRowUp()}
+            className="item-settings__icon"
+          />
+        )}
+        {canMoveDown && (
+          <MdExpandMore
+            size={30}
+            onClick={() => moveRowDown()}
+            className="item-settings__icon"
+          />
+        )}
+      </div>
     </div>
-  </div>
-)
+  )
+}
 
 export default Tiermaker

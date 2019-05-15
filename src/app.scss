@@ -49,11 +49,23 @@ body {
 }
 
 .item-settings {
+  display: flex;
+  align-items: center;
+  width: 30px;
   margin-left: auto;
-  background-color: white;
+  background-color: #1b1b1b;
+  padding: 10px;
+  color: #989898;
 
   &__controls {
-    background-color: green;
+    // background-color: green;
+  }
+
+  &__icon {
+    &:hover {
+      cursor: pointer;
+      color: white;
+    }
   }
 }
 
