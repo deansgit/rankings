@@ -1,3 +1,5 @@
+import base64url from 'base64url'
+
 export function tail(array) {
   const copy = [...array]
   copy.shift()
@@ -46,3 +48,6 @@ export const arrayInsert = (arr, index, newItem) => [
   // part of the array after the specified index
   ...arr.slice(index)
 ]
+
+export const jsonToBase64url = json => base64url(JSON.stringify(json))
+export const base64urlToJson = string => JSON.parse(base64url.decode(string))
