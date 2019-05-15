@@ -39,7 +39,19 @@ function Content({ rowName }) {
   // useEffect(() => {
   //   if (inputRef.current) inputRef.current.focus()
   // })
-  return <div>{rowName}</div>
+
+  const removeRow = () => dispatch({ type: 'REMOVE_ROW', rowName })
+  const clearRow = () => dispatch({ type: 'CLEAR_ROW', rowName })
+
+  return (
+    <div>
+      {rowName}
+      <div>
+        <button onClick={() => removeRow()}>Remove row</button>
+        <button onClick={() => clearRow()}>Clear row</button>
+      </div>
+    </div>
+  )
 }
 
 Content.propTypes = {

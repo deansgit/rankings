@@ -66,6 +66,20 @@ function reducer(state, action) {
         return rearranged
       }
     }
+    case 'REMOVE_ROW': {
+      let copy = [...state]
+      const index = copy.findIndex(r => r.name === action.rowName)
+      copy[0] = [...copy[0], ...copy[index].items]
+      copy = copy.filter(r => r.name !== action.rowName)
+      return copy
+    }
+    case 'CLEAR_ROW': {
+      let copy = [...state]
+      const index = copy.findIndex(r => r.name === action.rowName)
+      copy[0] = [...copy[0], ...copy[index].items]
+      copy[index].items = []
+      return copy
+    }
     default:
       throw new Error()
   }
