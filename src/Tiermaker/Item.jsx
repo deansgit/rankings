@@ -1,3 +1,5 @@
+import { number, string } from 'prop-types'
+
 import { Draggable } from 'react-beautiful-dnd'
 import React from 'react'
 
@@ -19,5 +21,11 @@ const Item = ({ index, name, imageUrl }) => (
     )}
   </Draggable>
 )
+
+Item.propTypes = {
+  index: number.isRequired,
+  name: string.isRequired,
+  imageUrl: string.isRequired
+}
 
 export default Item

@@ -1,4 +1,5 @@
 import { MdExpandLess, MdExpandMore, MdSettings } from 'react-icons/md'
+import { func, number, string } from 'prop-types'
 
 import React from 'react'
 
@@ -38,6 +39,13 @@ function ItemSettings({ name, moveRow, rowIndex, totalRows }) {
       </div>
     </div>
   )
+}
+
+ItemSettings.propTypes = {
+  name: string.isRequired,
+  moveRow: func.isRequired,
+  rowIndex: number.isRequired,
+  totalRows: number.isRequired
 }
 
 export default ItemSettings

@@ -1,6 +1,7 @@
 import { Droppable } from 'react-beautiful-dnd'
 import Item from './Item'
 import React from 'react'
+import { itemsType } from './types'
 
 const DefaultArea = ({ items }) => (
   <div className="default-container">
@@ -25,5 +26,9 @@ const DefaultArea = ({ items }) => (
     </Droppable>
   </div>
 )
+
+DefaultArea.propTypes = {
+  items: itemsType.isRequired
+}
 
 export default DefaultArea
