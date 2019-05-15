@@ -1,16 +1,28 @@
 import { func, number, string } from 'prop-types'
 
+import ContentEditable from 'react-contenteditable'
 import { Droppable } from 'react-beautiful-dnd'
 import Item from './Item'
 import ItemSettings from './ItemSettings'
 import React from 'react'
 import { itemsType } from './types'
 
-const RowContainer = ({ name, color, items, moveRow, rowIndex, totalRows }) => (
+const RowContainer = ({
+  name,
+  color,
+  items,
+  moveRow,
+  changeName,
+  rowIndex,
+  totalRows
+}) => (
   <div className="row">
-    <div className="label" style={{ backgroundColor: color }}>
-      {name}
-    </div>
+    <ContentEditable
+      style={{ backgroundColor: color }}
+      html={name}
+      onChange={e => changeName(name, e.target.value)}
+      className="label"
+    />
     <Droppable droppableId={name} direction="horizontal">
       {(provided, snapshot) => (
         <div
@@ -44,6 +56,7 @@ RowContainer.propTypes = {
   color: string.isRequired,
   items: itemsType.isRequired,
   moveRow: func.isRequired,
+  changeName: func.isRequired,
   rowIndex: number.isRequired,
   totalRows: number.isRequired
 }

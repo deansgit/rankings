@@ -24,6 +24,14 @@ function Tiermaker() {
     dispatch({ type: 'MOVE_ROW', rowName, direction })
   }
 
+  const changeName = (rowName, newName) => {
+    dispatch({
+      type: 'RENAME_ROW',
+      oldRowName: rowName,
+      newRowName: newName
+    })
+  }
+
   return (
     <TiermakerContext.Provider value={{ dispatch, data }}>
       <DragDropContext onDragEnd={onDragEnd}>
@@ -34,6 +42,7 @@ function Tiermaker() {
               color={color}
               items={items}
               moveRow={moveRow}
+              changeName={changeName}
               rowIndex={i}
               totalRows={tail(data).length}
               key={`row-${i}`}
