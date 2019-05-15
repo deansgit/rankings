@@ -89,6 +89,12 @@ function reducer(state, action) {
       }
       return state
     }
+    case 'CHANGE_ROW_COLOR': {
+      const copy = [...state]
+      const index = copy.findIndex(r => r.name === action.rowName)
+      copy[index].color = action.newColor.hex
+      return copy
+    }
     default:
       throw new Error()
   }

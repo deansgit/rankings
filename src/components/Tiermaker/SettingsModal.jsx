@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 
 import { MdSettings } from 'react-icons/md'
 import Modal from '../generic/Modal'
+import { SketchPicker } from 'react-color'
 import { TiermakerContext } from './Tiermaker'
 import { string } from 'prop-types'
 
@@ -33,7 +34,7 @@ SettingsModal.propTypes = {
 
 function Content({ rowName }) {
   const { dispatch, data } = useContext(TiermakerContext)
-  console.log('data', data)
+  // console.log('data', data)
   // const inputRef = useRef(null)
 
   // useEffect(() => {
@@ -50,6 +51,16 @@ function Content({ rowName }) {
       newRowName: e.target.value
     })
   }
+  const changeRowColor = newColor => {
+    dispatch({
+      type: 'CHANGE_ROW_COLOR',
+      rowName,
+      newColor
+    })
+  }
+
+  const index = data.findIndex(r => r.name === rowName)
+  const item = data[index]
 
   return (
     <div>
@@ -64,6 +75,10 @@ function Content({ rowName }) {
             placeholder={rowName}
           />
         </div>
+        <SketchPicker
+          color={item.color}
+          onChange={newColor => changeRowColor(newColor)}
+        />
       </div>
     </div>
   )
