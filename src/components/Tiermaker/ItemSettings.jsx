@@ -1,25 +1,19 @@
-import { MdExpandLess, MdExpandMore, MdSettings } from 'react-icons/md'
+import { MdExpandLess, MdExpandMore } from 'react-icons/md'
 import { func, number, string } from 'prop-types'
 
 import React from 'react'
+import SettingsModal from './SettingsModal'
 
 function ItemSettings({ name, moveRow, rowIndex, totalRows }) {
   const moveRowUp = () => moveRow(name, 'up')
   const moveRowDown = () => moveRow(name, 'down')
-  const openSettingsModal = () => {
-    console.log('openSettingsModal', { name })
-  }
 
   const canMoveUp = rowIndex !== 0
   const canMoveDown = rowIndex !== totalRows - 1
   return (
     <div className="item-settings">
       <div>
-        <MdSettings
-          size={25}
-          onClick={() => openSettingsModal(name)}
-          className="item-settings__modal-button"
-        />
+        <SettingsModal rowName={name} />
       </div>
       <div className="item-settings__controls">
         {canMoveUp && (
