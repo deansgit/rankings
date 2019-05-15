@@ -80,6 +80,15 @@ function reducer(state, action) {
       copy[index].items = []
       return copy
     }
+    case 'RENAME_ROW': {
+      if (action.newRowName !== '') {
+        const copy = [...state]
+        const index = copy.findIndex(r => r.name === action.oldRowName)
+        copy[index].name = action.newRowName
+        return copy
+      }
+      return state
+    }
     default:
       throw new Error()
   }

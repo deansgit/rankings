@@ -42,6 +42,14 @@ function Content({ rowName }) {
 
   const removeRow = () => dispatch({ type: 'REMOVE_ROW', rowName })
   const clearRow = () => dispatch({ type: 'CLEAR_ROW', rowName })
+  const renameRow = e => {
+    e.preventDefault()
+    dispatch({
+      type: 'RENAME_ROW',
+      oldRowName: rowName,
+      newRowName: e.target.value
+    })
+  }
 
   return (
     <div>
@@ -49,6 +57,13 @@ function Content({ rowName }) {
       <div>
         <button onClick={() => removeRow()}>Remove row</button>
         <button onClick={() => clearRow()}>Clear row</button>
+        <div>
+          <input
+            type="text"
+            onChange={e => renameRow(e)}
+            placeholder={rowName}
+          />
+        </div>
       </div>
     </div>
   )
