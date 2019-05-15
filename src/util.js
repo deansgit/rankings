@@ -1,3 +1,5 @@
+import { IMAGE_LIST } from './constants'
+import Joi from '@hapi/joi'
 import base64url from 'base64url'
 
 export function tail(array) {
@@ -51,3 +53,75 @@ export const arrayInsert = (arr, index, newItem) => [
 
 export const jsonToBase64url = json => base64url(JSON.stringify(json))
 export const base64urlToJson = string => JSON.parse(base64url.decode(string))
+
+/* 
+  "Vanilla"-ES6 object schema validation
+*/
+export function validateObject(object, schema) {
+  return Object.entries(schema)
+    .map(([property, validate]) => [property, validate(object[property])])
+    .reduce((errors, [property, valid]) => {
+      if (!valid) {
+        errors.push(new Error(`${property} is invalid.`))
+      }
+      return errors
+    }, [])
+}
+
+export function createInitialState() {
+  const data = []
+  const defaultArea = IMAGE_LIST.map((url, i) => {
+    return { name: `Item ${i + 1}`, image: url }
+  })
+  data.push(defaultArea)
+  const rows = [
+    { name: 'Love', color: 'green', items: [] },
+    { name: 'Like', color: 'lightgreen', items: [] },
+    { name: 'Dislike', color: 'orange', items: [] },
+    { name: 'Hate', color: 'red', items: [] }
+  ]
+  rows.map(row => data.push(row))
+  return data
+}
+
+export function validateUrlString(string) {
+  try {
+    const json = base64urlToJson(string)
+    const schema = Joi.array().items(
+      Joi.array()
+        .items(Joi.object().keys())
+        // .items(
+        //   Joi.object().keys({
+        //     name: Joi.string()
+        //       .alphanum()
+        //       .required(),
+        //     image: Joi.string()
+        //       .alphanum()
+        //       .required()
+        //   })
+        // )
+        .required(),
+      Joi.object()
+        .keys({
+          name: Joi.string()
+            .alphanum()
+            .required(),
+          color: Joi.string()
+            .alphanum()
+            .required(),
+          items: Joi.array().required()
+        })
+        .required()
+    )
+
+    const result = Joi.validate(json, schema)
+    console.log('validate result', result)
+    if (!result.error) {
+      return true
+    } else {
+      return false
+    }
+  } catch (err) {
+    return false
+  }
+}

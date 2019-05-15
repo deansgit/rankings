@@ -148,3 +148,69 @@ body {
 .reset-button {
   margin-bottom: 10px;
 }
+
+.nav {
+  margin-bottom: 10px;
+
+  a:not(:last-child) {
+    margin-right: 10px;
+  }
+}
+
+.btn {
+  font-family: inherit;
+  min-height: 40px;
+  min-width: 65px;
+  padding: 0 20px;
+  text-align: center;
+  vertical-align: middle;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  display: inline-flex;
+  font-size: 17px;
+  font-weight: 600;
+  background-color: #16181c;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  text-decoration: none;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    background-color: #7b1515;
+  }
+
+  &:enabled:hover {
+    background-color: black;
+    cursor: pointer;
+  }
+
+  &--green {
+    background-color: #019501;
+
+    &:hover {
+      background-color: green !important;
+    }
+  }
+
+  &--red {
+    background-color: #a50f0f;
+
+    &:hover {
+      background-color: #930d0d !important;
+    }
+  }
+
+  &--blue {
+    background-color: #3150de;
+
+    &:hover {
+      background-color: #2b47c5 !important;
+    }
+  }
+}

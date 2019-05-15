@@ -1,6 +1,4 @@
-import { arrayInsert, arrayMove } from '../../util'
-
-import { createInitialState } from './Tiermaker'
+import { arrayInsert, arrayMove, createInitialState } from '../../util'
 
 function reducer(state, action) {
   switch (action.type) {
