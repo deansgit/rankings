@@ -3,9 +3,9 @@ import React, { useReducer } from 'react'
 import DefaultArea from './DefaultArea'
 import { DragDropContext } from 'react-beautiful-dnd'
 import RowContainer from './RowContainer'
-import mockData from '../mockData.json'
+import mockData from '../../mockData.json'
 import reducer from './reducer'
-import { tail } from '../util'
+import { tail } from '../../util'
 
 const initialState = mockData
 

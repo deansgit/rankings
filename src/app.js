@@ -1,5 +1,5 @@
 import React from 'react'
-import Tiermaker from './Tiermaker/Tiermaker.jsx'
+import Tiermaker from './components/Tiermaker/Tiermaker.jsx'
 
 const App = () => (
   <div className="app">

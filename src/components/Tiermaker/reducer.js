@@ -1,4 +1,4 @@
-import { arrayMove } from '../util'
+import { arrayMove } from '../../util'
 
 function reducer(state, action) {
   switch (action.type) {
