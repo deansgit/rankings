@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+import { SET_DATA } from '../../redux/actions'
 import { createDataStructure } from '../../util'
 import { navigate } from 'hookrouter'
 import { useDispatch } from 'react-redux'
@@ -26,7 +27,7 @@ function CreateForm() {
   const handleFormSubmit = e => {
     e.preventDefault()
     const rows = ['First', 'Second', 'Third']
-    dispatch({ type: 'SET_DATA', data: createDataStructure(files, rows) })
+    dispatch({ type: SET_DATA, data: createDataStructure(files, rows) })
     navigate(`/maker`, false)
   }
 

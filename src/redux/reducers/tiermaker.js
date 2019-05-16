@@ -1,16 +1,27 @@
+import {
+  ADD_ROW,
+  CHANGE_ROW_COLOR,
+  CLEAR_ROW,
+  MOVE_ITEM,
+  MOVE_ROW,
+  REMOVE_ROW,
+  RENAME_ROW,
+  RESET,
+  SET_DATA
+} from '../actions'
 import { arrayInsert, arrayMove } from '../../util'
 
 const initialState = []
 
 function tiermaker(state = initialState, action) {
   switch (action.type) {
-    case 'RESET': {
+    case RESET: {
       return initialState
     }
-    case 'SET_DATA': {
+    case SET_DATA: {
       return action.data
     }
-    case 'MOVE_ITEM': {
+    case MOVE_ITEM: {
       const { destination, source } = action.dragInfo
       const toRow = state.findIndex(r => r.name === destination.droppableId)
       const fromRow = state.findIndex(r => r.name === source.droppableId)
@@ -52,7 +63,7 @@ function tiermaker(state = initialState, action) {
         }
       }
     }
-    case 'ADD_ROW': {
+    case ADD_ROW: {
       let copy = [...state]
       const index = copy.findIndex(r => r.name === action.rowName)
       const newRow = { name: 'New Row', color: 'grey', items: [] }
@@ -65,7 +76,7 @@ function tiermaker(state = initialState, action) {
       const updated = arrayInsert(state, insertIndex, newRow)
       return updated
     }
-    case 'MOVE_ROW': {
+    case MOVE_ROW: {
       const copy = [...state]
       const rowToMoveIndex = copy.findIndex(r => r.name === action.rowName)
       if (rowToMoveIndex === 0 && action.direction === 'up') {
@@ -87,21 +98,21 @@ function tiermaker(state = initialState, action) {
         return rearranged
       }
     }
-    case 'REMOVE_ROW': {
+    case REMOVE_ROW: {
       let copy = [...state]
       const index = copy.findIndex(r => r.name === action.rowName)
       copy[0] = [...copy[0], ...copy[index].items]
       copy = copy.filter(r => r.name !== action.rowName)
       return copy
     }
-    case 'CLEAR_ROW': {
+    case CLEAR_ROW: {
       let copy = [...state]
       const index = copy.findIndex(r => r.name === action.rowName)
       copy[0] = [...copy[0], ...copy[index].items]
       copy[index].items = []
       return copy
     }
-    case 'RENAME_ROW': {
+    case RENAME_ROW: {
       if (action.newRowName !== '') {
         const copy = [...state]
         const index = copy.findIndex(r => r.name === action.oldRowName)
@@ -110,14 +121,12 @@ function tiermaker(state = initialState, action) {
       }
       return state
     }
-    case 'CHANGE_ROW_COLOR': {
+    case CHANGE_ROW_COLOR: {
       const copy = [...state]
       const index = copy.findIndex(r => r.name === action.rowName)
       copy[index].color = action.newColor.hex
       return copy
     }
-    // default:
-    //   throw new Error()
     default: {
       return state
     }

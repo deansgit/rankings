@@ -1,3 +1,10 @@
+import {
+  MOVE_ITEM,
+  MOVE_ROW,
+  RENAME_ROW,
+  RESET,
+  SET_DATA
+} from '../../redux/actions'
 import React, { useEffect } from 'react'
 import {
   base64urlToJson,
@@ -23,16 +30,16 @@ function Tiermaker() {
     if (!dragInfo.destination) {
       return
     }
-    dispatch({ type: 'MOVE_ITEM', dragInfo })
+    dispatch({ type: MOVE_ITEM, dragInfo })
   }
 
   const moveRow = (rowName, direction) => {
-    dispatch({ type: 'MOVE_ROW', rowName, direction })
+    dispatch({ type: MOVE_ROW, rowName, direction })
   }
 
   const changeName = (rowName, newName) => {
     dispatch({
-      type: 'RENAME_ROW',
+      type: RENAME_ROW,
       oldRowName: rowName,
       newRowName: newName
     })
@@ -41,7 +48,7 @@ function Tiermaker() {
   const save = () => navigate(`/t/${jsonToBase64url(data)}`)
   const reset = () => {
     navigate(`/maker`, false)
-    dispatch({ type: 'RESET' })
+    dispatch({ type: RESET })
   }
 
   // useEffect(() => {
@@ -50,7 +57,7 @@ function Tiermaker() {
 
   useEffect(() => {
     if (data.length < 1) {
-      dispatch({ type: 'SET_DATA', data: createInitialState() })
+      dispatch({ type: SET_DATA, data: createInitialState() })
     }
   }, [data, dispatch])
 
@@ -90,11 +97,11 @@ function Tiermaker() {
 function Wrapper({ encoded }) {
   const dispatch = useDispatch()
   // if (encoded && validateUrlString(encoded)) {
-  //   dispatch({ type: 'SET_DATA', data: base64urlToJson(encoded) })
+  //   dispatch({ type: SET_DATA, data: base64urlToJson(encoded) })
   // }
   useEffect(() => {
     if (encoded && validateUrlString(encoded)) {
-      dispatch({ type: 'SET_DATA', data: base64urlToJson(encoded) })
+      dispatch({ type: SET_DATA, data: base64urlToJson(encoded) })
     }
   }, [encoded, dispatch])
   return <Tiermaker />

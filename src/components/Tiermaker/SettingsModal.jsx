@@ -1,3 +1,10 @@
+import {
+  ADD_ROW,
+  CHANGE_ROW_COLOR,
+  CLEAR_ROW,
+  REMOVE_ROW,
+  RENAME_ROW
+} from '../../redux/actions'
 import React, { useContext, useState } from 'react'
 import { func, string } from 'prop-types'
 
@@ -42,22 +49,22 @@ function Content({ setModalOpen, rowName }) {
   // })
 
   const addRow = direction => {
-    dispatch({ type: 'ADD_ROW', rowName, direction })
+    dispatch({ type: ADD_ROW, rowName, direction })
     setModalOpen(false)
   }
-  const removeRow = () => dispatch({ type: 'REMOVE_ROW', rowName })
-  const clearRow = () => dispatch({ type: 'CLEAR_ROW', rowName })
+  const removeRow = () => dispatch({ type: REMOVE_ROW, rowName })
+  const clearRow = () => dispatch({ type: CLEAR_ROW, rowName })
   const renameRow = e => {
     e.preventDefault()
     dispatch({
-      type: 'RENAME_ROW',
+      type: RENAME_ROW,
       oldRowName: rowName,
       newRowName: e.target.value
     })
   }
   const changeRowColor = newColor => {
     dispatch({
-      type: 'CHANGE_ROW_COLOR',
+      type: CHANGE_ROW_COLOR,
       rowName,
       newColor
     })
