@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "base64url": "^3.0.1",
+    "classnames": "^2.2.6",
     "hookrouter": "^1.2.2",
     "joi": "^14.3.1",
     "node-sass": "^4.12.0",

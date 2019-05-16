@@ -2,6 +2,7 @@ import { number, string } from 'prop-types'
 
 import { Draggable } from 'react-beautiful-dnd'
 import React from 'react'
+import className from 'classnames'
 
 const Item = ({ index, name, imageUrl }) => (
   <Draggable draggableId={name} index={index} key={name}>
@@ -10,6 +11,7 @@ const Item = ({ index, name, imageUrl }) => (
         ref={provided.innerRef}
         {...provided.draggableProps}
         {...provided.dragHandleProps}
+        className={className({ 'item--dragging': snapshot.isDragging })}
       >
         <div
           className="item"

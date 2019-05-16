@@ -5,6 +5,7 @@ import { Droppable } from 'react-beautiful-dnd'
 import Item from './Item'
 import ItemSettings from './ItemSettings'
 import React from 'react'
+import className from 'classnames'
 import { itemsType } from './types'
 
 const RowContainer = ({
@@ -26,7 +27,9 @@ const RowContainer = ({
     <Droppable droppableId={name} direction="horizontal">
       {(provided, snapshot) => (
         <div
-          className="content"
+          className={className('content', {
+            'content--dragging': snapshot.isDraggingOver
+          })}
           {...provided.droppableProps}
           ref={provided.innerRef}
         >
