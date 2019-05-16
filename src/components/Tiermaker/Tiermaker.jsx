@@ -1,4 +1,5 @@
 import {
+  CLEAR_ALL_ROWS,
   MOVE_ITEM,
   MOVE_ROW,
   RENAME_ROW,
@@ -50,6 +51,7 @@ function Tiermaker() {
     navigate(`/maker`, false)
     dispatch({ type: RESET })
   }
+  const clearRows = () => dispatch({ type: CLEAR_ALL_ROWS })
 
   // useEffect(() => {
   //   navigate(`/t/${jsonToBase64url(data)}`)
@@ -65,12 +67,11 @@ function Tiermaker() {
     <>
       {data.length < 1 ? null : (
         <TiermakerContext.Provider value={{ dispatch, data }}>
-          <button className="reset-button" onClick={() => save()}>
-            Save (to URL)
-          </button>
-          <button className="reset-button" onClick={() => reset()}>
-            Reset
-          </button>
+          <div className="controls">
+            <button onClick={() => save()}>Save (to URL)</button>
+            <button onClick={() => reset()}>Reset</button>
+            <button onClick={() => clearRows()}>Clear all rows</button>
+          </div>
           <DragDropContext onDragEnd={onDragEnd}>
             <div className="container">
               {tail(data).map(({ name, color, items }, i) => (

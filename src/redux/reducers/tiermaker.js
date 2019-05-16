@@ -1,6 +1,7 @@
 import {
   ADD_ROW,
   CHANGE_ROW_COLOR,
+  CLEAR_ALL_ROWS,
   CLEAR_ROW,
   MOVE_ITEM,
   MOVE_ROW,
@@ -9,7 +10,7 @@ import {
   RESET,
   SET_DATA
 } from '../actions'
-import { arrayInsert, arrayMove } from '../../util'
+import { arrayInsert, arrayMove, tail } from '../../util'
 
 const initialState = []
 
@@ -110,6 +111,17 @@ function tiermaker(state = initialState, action) {
       const index = copy.findIndex(r => r.name === action.rowName)
       copy[0] = [...copy[0], ...copy[index].items]
       copy[index].items = []
+      return copy
+    }
+    case CLEAR_ALL_ROWS: {
+      const copy = [...state]
+      const objectsToMove = []
+      Object.keys(tail(copy)).forEach(index => {
+        const rowIndex = parseInt(index) + 1
+        copy[rowIndex].items.map(item => objectsToMove.push(item))
+        copy[rowIndex].items = []
+      })
+      copy[0] = [...copy[0], ...objectsToMove]
       return copy
     }
     case RENAME_ROW: {
