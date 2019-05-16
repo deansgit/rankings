@@ -21,11 +21,11 @@ import { DragDropContext } from 'react-beautiful-dnd'
 import RowContainer from './RowContainer'
 import { navigate } from 'hookrouter'
 
-export const TiermakerContext = React.createContext(null)
-
 function Tiermaker() {
   const dispatch = useDispatch()
-  const data = useSelector(state => state.tiermaker)
+  // const data = useSelector(state => state.tiermaker) // somehow this is broken? probably a memo related issue
+  const state = useSelector(state => state)
+  const data = state.tiermaker
 
   const onDragEnd = dragInfo => {
     if (!dragInfo.destination) {
@@ -66,7 +66,7 @@ function Tiermaker() {
   return (
     <>
       {data.length < 1 ? null : (
-        <TiermakerContext.Provider value={{ dispatch, data }}>
+        <>
           <div className="controls">
             <button onClick={() => save()}>Save (to URL)</button>
             <button onClick={() => reset()}>Reset</button>
@@ -89,7 +89,7 @@ function Tiermaker() {
             </div>
             <DefaultArea items={data[0]} />
           </DragDropContext>
-        </TiermakerContext.Provider>
+        </>
       )}
     </>
   )

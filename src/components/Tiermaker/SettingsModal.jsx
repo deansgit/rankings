@@ -5,13 +5,13 @@ import {
   REMOVE_ROW,
   RENAME_ROW
 } from '../../redux/actions'
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { func, string } from 'prop-types'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { MdSettings } from 'react-icons/md'
 import Modal from '../generic/Modal'
 import { SketchPicker } from 'react-color'
-import { TiermakerContext } from './Tiermaker'
 
 function SettingsModal({ rowName }) {
   const [modalOpen, setModalOpen] = useState(false)
@@ -40,8 +40,11 @@ SettingsModal.propTypes = {
 }
 
 function Content({ setModalOpen, rowName }) {
-  const { dispatch, data } = useContext(TiermakerContext)
-  // console.log('data', data)
+  const dispatch = useDispatch()
+  const row = useSelector(state =>
+    state.tiermaker.find(r => r.name === rowName)
+  )
+
   // const inputRef = useRef(null)
 
   // useEffect(() => {
@@ -70,9 +73,6 @@ function Content({ setModalOpen, rowName }) {
     })
   }
 
-  const index = data.findIndex(r => r.name === rowName)
-  const item = data[index]
-
   return (
     <div>
       {rowName}
@@ -89,7 +89,7 @@ function Content({ setModalOpen, rowName }) {
           />
         </div>
         <SketchPicker
-          color={item.color}
+          color={row.color}
           onChange={newColor => changeRowColor(newColor)}
         />
       </div>
