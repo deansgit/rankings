@@ -216,3 +216,34 @@ body {
     }
   }
 }
+
+.create-form {
+  &__images {
+    display: flex;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    width: 100%;
+    margin-top: 20px;
+    background-color: #232323;
+    border: solid 2px black;
+  }
+
+  &__image {
+    max-width: 100px;
+    max-height: 100px;
+    opacity: 0.8;
+
+    &:not(:last-child) {
+      margin-right: 20px;
+    }
+
+    &:hover {
+      cursor: pointer;
+      opacity: 1;
+    }
+  }
+
+  &__controls {
+    margin-top: 20px;
+  }
+}

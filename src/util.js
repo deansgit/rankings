@@ -68,6 +68,22 @@ export function validateObject(object, schema) {
     }, [])
 }
 
+export function createImageObject(name, url) {
+  return { name, image: url }
+}
+
+export function createRowObject(name, color, items) {
+  return { name, color, items }
+}
+
+export function createDataStructure(images, rows) {
+  const rowData = rows.map(rowName => createRowObject(rowName, 'grey', []))
+  const imageData = [
+    images.map((url, i) => createImageObject(`Item ${i + 1}`, url))
+  ]
+  return [...imageData, ...rowData]
+}
+
 export function createInitialState() {
   const data = []
   const defaultArea = IMAGE_LIST.map((url, i) => {

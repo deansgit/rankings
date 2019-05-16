@@ -1,15 +1,16 @@
-import { A, useRedirect, useRoutes } from 'hookrouter'
+import { useRedirect, useRoutes } from 'hookrouter'
 
+import { A } from 'hookrouter'
+import CreateForm from './components/CreateForm/CreateForm.jsx'
 import React from 'react'
 import Tiermaker from './components/Tiermaker/Tiermaker.jsx'
 
 const routes = {
   '/': () => <Home />,
-  '/t/:hash': ({ hash }) => <Tiermaker data={hash} />,
+  '/t/:encoded': ({ encoded }) => <Tiermaker encoded={encoded} />,
   '/maker': () => <Tiermaker />,
-  '/create': () => <div>create</div>
+  '/create': () => <CreateForm />
 }
-
 function Home() {
   useRedirect('/', '/maker')
   return null
@@ -23,10 +24,7 @@ function Router() {
 const App = () => (
   <div className="app">
     <div className="nav">
-      {/* <A href="/" className="btn btn--blue">
-        Home
-      </A> */}
-      <A href="/create" className="btn btn--blue">
+      <A href="/create" className="btn">
         Create
       </A>
     </div>
