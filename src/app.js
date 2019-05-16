@@ -24,6 +24,9 @@ function Router() {
 const App = () => (
   <div className="app">
     <div className="nav">
+      <Button href="/" className="btn">
+        Home
+      </Button>
       <Button href="/create" className="btn">
         Create
       </Button>
