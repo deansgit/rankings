@@ -166,7 +166,7 @@ body {
 .nav {
   margin-bottom: 10px;
 
-  button:not(:last-child) {
+  a:not(:last-child) {
     margin-right: 10px;
   }
 }
@@ -189,6 +189,7 @@ body {
   border: none;
   border-radius: 6px;
   text-decoration: none;
+  box-sizing: border-box;
 
   &:focus {
     outline: none;
