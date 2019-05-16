@@ -2,8 +2,10 @@ import { useRedirect, useRoutes } from 'hookrouter'
 
 import Button from './components/generic/Button'
 import CreateForm from './components/CreateForm/CreateForm.jsx'
+import { Provider } from 'react-redux'
 import React from 'react'
 import Tiermaker from './components/Tiermaker/Tiermaker.jsx'
+import store from './redux/store'
 
 const routes = {
   '/': () => <Home />,
@@ -22,17 +24,19 @@ function Router() {
 }
 
 const App = () => (
-  <div className="app">
-    <div className="nav">
-      <Button href="/" className="btn">
-        Home
-      </Button>
-      <Button href="/create" className="btn">
-        Create
-      </Button>
+  <Provider store={store}>
+    <div className="app">
+      <div className="nav">
+        <Button href="/" className="btn">
+          Home
+        </Button>
+        <Button href="/create" className="btn">
+          Create
+        </Button>
+      </div>
+      <Router />
     </div>
-    <Router />
-  </div>
+  </Provider>
 )
 
 export default App

@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react'
+import React, { useEffect } from 'react'
 import {
   base64urlToJson,
   createInitialState,
@@ -6,17 +6,18 @@ import {
   tail,
   validateUrlString
 } from '../../util'
+import { useDispatch, useSelector } from 'react-redux'
 
 import DefaultArea from './DefaultArea'
 import { DragDropContext } from 'react-beautiful-dnd'
 import RowContainer from './RowContainer'
 import { navigate } from 'hookrouter'
-import reducer from './reducer'
 
 export const TiermakerContext = React.createContext(null)
 
-function Tiermaker({ initialState }) {
-  const [data, dispatch] = useReducer(reducer, initialState)
+function Tiermaker() {
+  const dispatch = useDispatch()
+  const data = useSelector(state => state.tiermaker)
 
   const onDragEnd = dragInfo => {
     if (!dragInfo.destination) {
@@ -37,52 +38,66 @@ function Tiermaker({ initialState }) {
     })
   }
 
-  const save = () => navigate(`/t/${jsonToBase64url(data)}`, true)
+  const save = () => navigate(`/t/${jsonToBase64url(data)}`)
+  const reset = () => {
+    navigate(`/maker`, false)
+    dispatch({ type: 'RESET' })
+  }
+
+  // useEffect(() => {
+  //   navigate(`/t/${jsonToBase64url(data)}`)
+  // }, [data])
 
   useEffect(() => {
-    navigate(`/t/${jsonToBase64url(data)}`, true)
-  }, [data])
+    if (data.length < 1) {
+      dispatch({ type: 'SET_DATA', data: createInitialState() })
+    }
+  }, [data, dispatch])
 
   return (
-    <TiermakerContext.Provider value={{ dispatch, data }}>
-      <button className="reset-button" onClick={() => save()}>
-        Save (to URL)
-      </button>
-      <button
-        className="reset-button"
-        onClick={() => dispatch({ type: 'RESET' })}
-      >
-        Reset
-      </button>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <div className="container">
-          {tail(data).map(({ name, color, items }, i) => (
-            <RowContainer
-              name={name}
-              color={color}
-              items={items}
-              moveRow={moveRow}
-              changeName={changeName}
-              rowIndex={i}
-              totalRows={tail(data).length}
-              key={`row-${i}`}
-            />
-          ))}
-        </div>
-        <DefaultArea items={data[0]} />
-      </DragDropContext>
-    </TiermakerContext.Provider>
+    <>
+      {data.length < 1 ? null : (
+        <TiermakerContext.Provider value={{ dispatch, data }}>
+          <button className="reset-button" onClick={() => save()}>
+            Save (to URL)
+          </button>
+          <button className="reset-button" onClick={() => reset()}>
+            Reset
+          </button>
+          <DragDropContext onDragEnd={onDragEnd}>
+            <div className="container">
+              {tail(data).map(({ name, color, items }, i) => (
+                <RowContainer
+                  name={name}
+                  color={color}
+                  items={items}
+                  moveRow={moveRow}
+                  changeName={changeName}
+                  rowIndex={i}
+                  totalRows={tail(data).length}
+                  key={`row-${i}`}
+                />
+              ))}
+            </div>
+            <DefaultArea items={data[0]} />
+          </DragDropContext>
+        </TiermakerContext.Provider>
+      )}
+    </>
   )
 }
 
-function Wrapper({ data }) {
-  let initialState
-  if (validateUrlString(data)) {
-    initialState = base64urlToJson(data)
-  } else {
-    initialState = createInitialState()
-  }
-  return <Tiermaker initialState={initialState} />
+function Wrapper({ encoded }) {
+  const dispatch = useDispatch()
+  // if (encoded && validateUrlString(encoded)) {
+  //   dispatch({ type: 'SET_DATA', data: base64urlToJson(encoded) })
+  // }
+  useEffect(() => {
+    if (encoded && validateUrlString(encoded)) {
+      dispatch({ type: 'SET_DATA', data: base64urlToJson(encoded) })
+    }
+  }, [encoded, dispatch])
+  return <Tiermaker />
 }
 
 export default Wrapper
