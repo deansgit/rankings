@@ -1,6 +1,6 @@
 import { useRedirect, useRoutes } from 'hookrouter'
 
-import { A } from 'hookrouter'
+import Button from './components/generic/Button'
 import CreateForm from './components/CreateForm/CreateForm.jsx'
 import React from 'react'
 import Tiermaker from './components/Tiermaker/Tiermaker.jsx'
@@ -24,9 +24,9 @@ function Router() {
 const App = () => (
   <div className="app">
     <div className="nav">
-      <A href="/create" className="btn">
+      <Button href="/create" className="btn">
         Create
-      </A>
+      </Button>
     </div>
     <Router />
   </div>
