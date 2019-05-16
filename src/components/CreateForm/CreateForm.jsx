@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 
 import { createDataStructure } from '../../util'
+import { navigate } from 'hookrouter'
+import { useDispatch } from 'react-redux'
 
 function filesToDataURIs(files) {
   return new Promise(resolve => {
@@ -19,12 +21,13 @@ function asyncFileReader(file) {
 
 function CreateForm() {
   const [files, setFiles] = useState('')
+  const dispatch = useDispatch()
 
   const handleFormSubmit = e => {
     e.preventDefault()
     const rows = ['First', 'Second', 'Third']
-    const initialState = createDataStructure(files, rows)
-    // navigate(`/maker`, false)
+    dispatch({ type: 'SET_DATA', data: createDataStructure(files, rows) })
+    navigate(`/maker`, false)
   }
 
   const handleFileDrop = e => {
