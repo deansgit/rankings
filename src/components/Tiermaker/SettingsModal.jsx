@@ -5,13 +5,13 @@ import {
   REMOVE_ROW,
   RENAME_ROW
 } from '../../redux/actions'
+import { CirclePicker, SketchPicker } from 'react-color'
 import React, { useState } from 'react'
 import { func, string } from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { MdSettings } from 'react-icons/md'
 import Modal from '../generic/Modal'
-import { SketchPicker } from 'react-color'
 
 function SettingsModal({ rowName }) {
   const [modalOpen, setModalOpen] = useState(false)
@@ -40,6 +40,7 @@ SettingsModal.propTypes = {
 }
 
 function Content({ setModalOpen, rowName }) {
+  const [showCustomPicker, setShowCustomPicker] = useState(false)
   const dispatch = useDispatch()
   const row = useSelector(state =>
     state.tiermaker.find(r => r.name === rowName)
@@ -68,24 +69,64 @@ function Content({ setModalOpen, rowName }) {
   }
 
   return (
-    <div>
-      {rowName}
+    <div className="row-settings-modal">
+      <h3 className="row-settings-modal__title">Row Settings</h3>
       <div>
-        <button onClick={() => addRow('above')}>Add row above</button>
-        <button onClick={() => addRow('below')}>Add row below</button>
-        <button onClick={() => removeRow()}>Remove row</button>
-        <button onClick={() => clearRow()}>Clear row</button>
+        <div className="row-settings-modal__controls">
+          <button
+            onClick={() => addRow('above')}
+            className="row-settings-modal__button"
+          >
+            Add row above
+          </button>
+          <button
+            onClick={() => addRow('below')}
+            className="row-settings-modal__button"
+          >
+            Add row below
+          </button>
+          <button
+            onClick={() => removeRow()}
+            className="row-settings-modal__button"
+          >
+            Remove row
+          </button>
+          <button
+            onClick={() => clearRow()}
+            className="row-settings-modal__button"
+          >
+            Clear row
+          </button>
+        </div>
         <div>
           <input
             type="text"
             onChange={e => renameRow(e)}
             placeholder={rowName}
+            className="row-settings-modal__input"
           />
         </div>
-        <SketchPicker
-          color={row.color}
-          onChange={newColor => changeRowColor(newColor)}
-        />
+        {!showCustomPicker && (
+          <div className="row-settings-modal__colorpicker">
+            <CirclePicker
+              color={row.color}
+              onChange={newColor => changeRowColor(newColor)}
+            />
+          </div>
+        )}
+        <div className="row-settings-modal__colorpicker">
+          {!showCustomPicker && (
+            <button className="btn" onClick={() => setShowCustomPicker(true)}>
+              Choose custom color
+            </button>
+          )}
+          {showCustomPicker && (
+            <SketchPicker
+              color={row.color}
+              onChange={newColor => changeRowColor(newColor)}
+            />
+          )}
+        </div>
       </div>
     </div>
   )

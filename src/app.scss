@@ -281,3 +281,76 @@ body {
     font-weight: bold;
   }
 }
+
+.row-settings-modal {
+  padding: 10px;
+
+  &__title {
+    margin: 0px 0 25px 0;
+    font-size: 26px;
+    font-weight: 600;
+  }
+
+  &__controls {
+    margin: 15px 0;
+  }
+
+  &__input {
+    min-height: 50px;
+    width: 100%;
+    border: solid 1px #cccccc;
+    border-radius: 6px;
+    font-size: 21px;
+    padding: 8px 15px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 1px #2684ff;
+      border-color: #2684ff;
+    }
+  }
+
+  &__button {
+    width: 100%;
+    font-family: inherit;
+    min-height: 40px;
+    min-width: 65px;
+    padding: 0 20px;
+    text-align: center;
+    vertical-align: middle;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    display: inline-flex;
+    font-size: 17px;
+    font-weight: 600;
+    background-color: #16181c;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none;
+    box-sizing: border-box;
+
+    &:hover {
+      background-color: black;
+      cursor: pointer;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+  }
+
+  &__colorpicker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0 25px 0;
+  }
+}
