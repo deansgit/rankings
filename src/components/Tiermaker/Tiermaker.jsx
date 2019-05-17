@@ -70,12 +70,21 @@ function Tiermaker() {
       {data.length < 1 ? null : (
         <>
           <div className="controls">
-            <button onClick={() => save()}>Save (to URL)</button>
-            <button onClick={() => updateClipboard(jsonToBase64url(data))}>
-              Save (to clipboard)
+            <button onClick={() => save()} className="btn">
+              Save to URL
             </button>
-            <button onClick={() => reset()}>Reset</button>
-            <button onClick={() => clearRows()}>Clear all rows</button>
+            <button
+              onClick={() => updateClipboard(jsonToBase64url(data))}
+              className="btn"
+            >
+              Save to clipboard
+            </button>
+            <button onClick={() => reset()} className="btn">
+              Reset
+            </button>
+            <button onClick={() => clearRows()} className="btn">
+              Clear all rows
+            </button>
           </div>
           <DragDropContext onDragEnd={onDragEnd}>
             <div className="container">
