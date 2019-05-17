@@ -104,34 +104,15 @@ export function validateUrlString(string) {
   try {
     const json = base64urlToJson(string)
     const schema = Joi.array().items(
-      Joi.array()
-        .items(Joi.object().keys())
-        // .items(
-        //   Joi.object().keys({
-        //     name: Joi.string()
-        //       .alphanum()
-        //       .required(),
-        //     image: Joi.string()
-        //       .alphanum()
-        //       .required()
-        //   })
-        // )
-        .required(),
-      Joi.object()
-        .keys({
-          name: Joi.string()
-            .alphanum()
-            .required(),
-          color: Joi.string()
-            .alphanum()
-            .required(),
-          items: Joi.array().required()
-        })
-        .required()
+      Joi.array().items(Joi.object()),
+      Joi.object().keys({
+        name: Joi.string(),
+        color: Joi.string(),
+        items: Joi.array()
+      })
     )
 
     const result = Joi.validate(json, schema)
-    console.log('validate result', result)
     if (!result.error) {
       return true
     } else {
@@ -140,4 +121,35 @@ export function validateUrlString(string) {
   } catch (err) {
     return false
   }
+}
+
+/* 
+  Write string to clipboard
+*/
+export function updateClipboard(string) {
+  return new Promise((resolve, reject) => {
+    navigator.clipboard.writeText(string).then(
+      () => {
+        resolve('Success')
+      },
+      () => {
+        reject('Error')
+      }
+    )
+  })
+}
+
+export function asyncFileReader(file) {
+  return new Promise(resolve => {
+    const reader = new FileReader()
+    reader.onload = e => resolve(e.target.result)
+    reader.readAsDataURL(file)
+  })
+}
+
+export function filesToDataURIs(files) {
+  return new Promise(resolve => {
+    const promises = files.map(file => asyncFileReader(file))
+    Promise.all(promises).then(results => resolve(results))
+  })
 }
