@@ -263,3 +263,21 @@ body {
     margin-top: 20px;
   }
 }
+
+.import-form {
+  &__input {
+    font-size: 18px;
+    min-height: 30vh;
+    width: 100%;
+    resize: vertical;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+    padding: 10px;
+  }
+
+  &__info-box {
+    margin-bottom: 15px;
+    color: red;
+    font-weight: bold;
+  }
+}

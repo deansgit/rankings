@@ -12,7 +12,6 @@ function ImportForm() {
 
   const handleFormSubmit = e => {
     e.preventDefault()
-    console.log('validateUrlString', validateUrlString(importString))
     if (importString && validateUrlString(importString)) {
       dispatch({ type: SET_DATA, data: base64urlToJson(importString) })
       navigate(`/maker`, false)

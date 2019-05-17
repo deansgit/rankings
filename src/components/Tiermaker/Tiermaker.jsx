@@ -12,6 +12,7 @@ import {
   createInitialState,
   jsonToBase64url,
   tail,
+  updateClipboard,
   validateUrlString
 } from '../../util'
 import { useDispatch, useSelector } from 'react-redux'
@@ -20,6 +21,7 @@ import DefaultArea from './DefaultArea'
 import { DragDropContext } from 'react-beautiful-dnd'
 import RowContainer from './RowContainer'
 import { navigate } from 'hookrouter'
+import { string } from 'prop-types'
 
 function Tiermaker() {
   const dispatch = useDispatch()
@@ -69,6 +71,9 @@ function Tiermaker() {
         <>
           <div className="controls">
             <button onClick={() => save()}>Save (to URL)</button>
+            <button onClick={() => updateClipboard(jsonToBase64url(data))}>
+              Save (to clipboard)
+            </button>
             <button onClick={() => reset()}>Reset</button>
             <button onClick={() => clearRows()}>Clear all rows</button>
           </div>
@@ -95,17 +100,21 @@ function Tiermaker() {
   )
 }
 
+/* 
+  Try to parse state from base64url encoded url string
+*/
 function Wrapper({ encoded }) {
   const dispatch = useDispatch()
-  // if (encoded && validateUrlString(encoded)) {
-  //   dispatch({ type: SET_DATA, data: base64urlToJson(encoded) })
-  // }
   useEffect(() => {
     if (encoded && validateUrlString(encoded)) {
       dispatch({ type: SET_DATA, data: base64urlToJson(encoded) })
     }
   }, [encoded, dispatch])
   return <Tiermaker />
+}
+
+Wrapper.propTypes = {
+  encoded: string
 }
 
 export default Wrapper

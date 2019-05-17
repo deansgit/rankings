@@ -1,18 +1,21 @@
 import { useRedirect, useRoutes } from 'hookrouter'
 
 import Button from './components/generic/Button'
-import CreateForm from './components/CreateForm/CreateForm.jsx'
+import CreateForm from './components/CreateForm'
+import ImportForm from './components/ImportForm'
 import { Provider } from 'react-redux'
 import React from 'react'
-import Tiermaker from './components/Tiermaker/Tiermaker.jsx'
+import Tiermaker from './components/Tiermaker/Tiermaker'
 import store from './redux/store'
 
 const routes = {
   '/': () => <Home />,
   '/t/:encoded': ({ encoded }) => <Tiermaker encoded={encoded} />,
   '/maker': () => <Tiermaker />,
-  '/create': () => <CreateForm />
+  '/create': () => <CreateForm />,
+  '/import': () => <ImportForm />
 }
+
 function Home() {
   useRedirect('/', '/maker')
   return null
@@ -27,8 +30,8 @@ const App = () => (
   <Provider store={store}>
     <div className="app">
       <div className="nav">
-        <Button href="/" className="btn">
-          Home
+        <Button href="/import" className="btn">
+          Import
         </Button>
         <Button href="/create" className="btn">
           Create
