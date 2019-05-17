@@ -21,7 +21,7 @@ function SettingsModal({ rowName }) {
       <MdSettings
         size={25}
         onClick={() => setModalOpen(true)}
-        className="item-settings__modal-button"
+        className="row-settings__modal-button"
       />
       <Modal
         ariaLabel="Settings Modal"
@@ -44,12 +44,6 @@ function Content({ setModalOpen, rowName }) {
   const row = useSelector(state =>
     state.tiermaker.find(r => r.name === rowName)
   )
-
-  // const inputRef = useRef(null)
-
-  // useEffect(() => {
-  //   if (inputRef.current) inputRef.current.focus()
-  // })
 
   const addRow = direction => {
     dispatch({ type: ADD_ROW, rowName, direction })

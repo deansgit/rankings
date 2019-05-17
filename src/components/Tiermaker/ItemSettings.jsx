@@ -11,23 +11,23 @@ function ItemSettings({ name, moveRow, rowIndex, totalRows }) {
   const canMoveUp = rowIndex !== 0
   const canMoveDown = rowIndex !== totalRows - 1
   return (
-    <div className="item-settings">
+    <div className="row-settings">
       <div>
         <SettingsModal rowName={name} />
       </div>
-      <div className="item-settings__controls">
+      <div className="row-settings__controls">
         {canMoveUp && (
           <MdExpandLess
             size={30}
             onClick={() => moveRowUp()}
-            className="item-settings__icon"
+            className="row-settings__icon"
           />
         )}
         {canMoveDown && (
           <MdExpandMore
             size={30}
             onClick={() => moveRowDown()}
-            className="item-settings__icon"
+            className="row-settings__icon"
           />
         )}
       </div>

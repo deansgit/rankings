@@ -1,6 +1,7 @@
 import { Droppable } from 'react-beautiful-dnd'
 import Item from './Item'
 import React from 'react'
+import className from 'classnames'
 import { itemsType } from './types'
 
 const DefaultArea = ({ items }) => (
@@ -8,7 +9,9 @@ const DefaultArea = ({ items }) => (
     <Droppable droppableId="default" direction="horizontal">
       {(provided, snapshot) => (
         <div
-          className="default-container__content"
+          className={className('default-container__content', {
+            'default-container__content--dragging': snapshot.isDraggingOver
+          })}
           {...provided.droppableProps}
           ref={provided.innerRef}
         >
