@@ -26,9 +26,9 @@ body {
 
   &__content {
     display: flex;
-    flex-wrap: wrap;
     width: 100%;
     min-height: 105px;
+    overflow-y: auto;
 
     &--dragging {
       background-color: #1d1d1d;
