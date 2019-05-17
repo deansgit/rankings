@@ -281,9 +281,17 @@ h6 {
     resize: vertical;
     box-sizing: border-box;
     margin-bottom: 15px;
-    padding: 10px;
+    padding: 10px 15px;
     font-family: inherit;
     line-height: 26px;
+    border: solid 1px #cccccc;
+    border-radius: 6px;
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 1px #2684ff;
+      border-color: #2684ff;
+    }
   }
 
   &__info-box {
