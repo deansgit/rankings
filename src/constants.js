@@ -1,3 +1,6 @@
+/* 
+  List of default image URLs (mostly used for debugging)
+*/
 export const IMAGE_LIST = [
   'https://i.imgur.com/oZrrEk9.png',
   'https://i.imgur.com/holSvy7.png',

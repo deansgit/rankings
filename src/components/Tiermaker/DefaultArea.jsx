@@ -4,6 +4,10 @@ import React from 'react'
 import className from 'classnames'
 import { itemsType } from './types'
 
+/* 
+  Default Area
+  Area where images located by default, before they are dragged into different rows/tiers
+*/
 const DefaultArea = ({ items }) => (
   <div className="default-container">
     <Droppable droppableId="default" direction="horizontal">

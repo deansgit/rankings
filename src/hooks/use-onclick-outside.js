@@ -1,5 +1,8 @@
 import { useEffect } from 'react'
 
+/* 
+  Call handler when clicking outside provided ref
+*/
 function useOnClickOutside(ref, handler) {
   useEffect(() => {
     const listener = event => {
@@ -18,7 +21,7 @@ function useOnClickOutside(ref, handler) {
       document.removeEventListener('mousedown', listener)
       document.removeEventListener('touchstart', listener)
     }
-  }, [ref, handler]) // Empty array ensures that effect is only run on mount and unmount
+  }, [ref, handler])
 }
 
 export default useOnClickOutside

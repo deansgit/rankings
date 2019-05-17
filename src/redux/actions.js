@@ -1,6 +1,6 @@
-/*
- * Action types
- */
+/* 
+  Create general structure of Tiermaker component data set
+*/
 export const RESET = 'RESET'
 export const SET_DATA = 'SET_DATA'
 export const MOVE_ITEM = 'MOVE_ITEM'

@@ -5,19 +5,22 @@ import { SET_DATA } from '../redux/actions'
 import { navigate } from 'hookrouter'
 import { useDispatch } from 'react-redux'
 
+/* 
+  Create Form
+  Enables creation of custom tier sets by uploading a set of custom images
+*/
 function CreateForm() {
   const [files, setFiles] = useState('')
   const dispatch = useDispatch()
 
   const handleFormSubmit = e => {
     e.preventDefault()
-    const rows = ['First', 'Second', 'Third']
+    const rows = ['First', 'Second', 'Third'] // TODO: make this dynamic
     dispatch({ type: SET_DATA, data: createDataStructure(files, rows) })
     navigate(`/maker`, false)
   }
 
   const handleFileDrop = e => {
-    // const blob = URL.createObjectURL(files[0])
     filesToDataURIs([...e.target.files]).then(result => setFiles(result))
   }
 
@@ -66,10 +69,6 @@ function CreateForm() {
           )}
         </form>
       </div>
-      {/* <div>
-        <h3>Default Rows</h3>
-        <input type="text" />
-      </div> */}
     </div>
   )
 }

@@ -8,6 +8,9 @@ import React from 'react'
 import Tiermaker from './components/Tiermaker/Tiermaker'
 import store from './redux/store'
 
+/* 
+  Main Router map
+*/
 const routes = {
   '/': () => <Home />,
   '/t/:encoded': ({ encoded }) => <Tiermaker encoded={encoded} />,
@@ -16,16 +19,25 @@ const routes = {
   '/import': () => <ImportForm />
 }
 
+/* 
+  Home Page
+*/
 function Home() {
   useRedirect('/', '/maker')
   return null
 }
 
+/* 
+  Router
+*/
 function Router() {
   const routeResult = useRoutes(routes)
   return routeResult || <div>Page not found</div>
 }
 
+/* 
+  Main App component
+*/
 const App = () => (
   <Provider store={store}>
     <div className="app">

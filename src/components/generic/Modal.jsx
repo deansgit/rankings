@@ -4,6 +4,9 @@ import { bool, func, node, number, string } from 'prop-types'
 import ReactDOM from 'react-dom'
 import useOnClickOutside from '../../hooks/use-onclick-outside'
 
+/* 
+  Base Modal component
+*/
 function Modal({ children, ariaLabel, width, open, setOpen }) {
   const ref = useRef()
   useOnClickOutside(ref, () => setOpen(false))

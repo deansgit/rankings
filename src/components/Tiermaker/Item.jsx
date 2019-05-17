@@ -4,6 +4,10 @@ import { Draggable } from 'react-beautiful-dnd'
 import React from 'react'
 import className from 'classnames'
 
+/* 
+  Item
+  Draggable item container
+*/
 const Item = ({ index, name, imageUrl }) => (
   <Draggable draggableId={name} index={index} key={name}>
     {(provided, snapshot) => (

@@ -5,6 +5,10 @@ import { SET_DATA } from '../redux/actions'
 import { navigate } from 'hookrouter'
 import { useDispatch } from 'react-redux'
 
+/* 
+  Import Form
+  Enables importing of base64url encoded strings through a textarea
+*/
 function ImportForm() {
   const [importString, setImportString] = useState('')
   const [error, setError] = useState('')

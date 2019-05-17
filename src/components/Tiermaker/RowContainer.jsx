@@ -8,6 +8,10 @@ import React from 'react'
 import className from 'classnames'
 import { itemsType } from './types'
 
+/* 
+  Row Container
+  Droppable item container
+*/
 const RowContainer = ({
   name,
   color,

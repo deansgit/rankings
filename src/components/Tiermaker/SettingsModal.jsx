@@ -13,6 +13,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { MdSettings } from 'react-icons/md'
 import Modal from '../generic/Modal'
 
+/* 
+  Settings Modal
+  List of options to change appearance of rows
+*/
 function SettingsModal({ rowName }) {
   const [modalOpen, setModalOpen] = useState(false)
 
@@ -39,6 +43,9 @@ SettingsModal.propTypes = {
   rowName: string.isRequired
 }
 
+/* 
+  Modal Content
+*/
 function Content({ setModalOpen, rowName }) {
   const [showCustomPicker, setShowCustomPicker] = useState(false)
   const dispatch = useDispatch()

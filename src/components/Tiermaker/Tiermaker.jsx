@@ -23,6 +23,9 @@ import RowContainer from './RowContainer'
 import { navigate } from 'hookrouter'
 import { string } from 'prop-types'
 
+/* 
+  Main Tiermaker Component
+*/
 function Tiermaker() {
   const dispatch = useDispatch()
   // const data = useSelector(state => state.tiermaker) // somehow this is broken? probably a memo related issue

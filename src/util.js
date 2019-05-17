@@ -2,16 +2,22 @@ import { IMAGE_LIST } from './constants'
 import Joi from '@hapi/joi'
 import base64url from 'base64url'
 
+/* 
+  Gets all but the first element of array
+*/
 export function tail(array) {
   const copy = [...array]
   copy.shift()
   return copy
 }
 
+/* 
+  Moves an array item from one position in an array to another
+*/
 export function arrayMove(array, moveIndex, toIndex) {
-  /* #move - Moves an array item from one position in an array to another.
-     Note: This is a pure function so a new array will be returned, instead
-     of altering the array argument.
+  /* 
+    Note: This is a pure function so a new array will be returned, instead
+    of altering the array argument.
     Arguments:
     1. array     (String) : Array in which to move an item.         (required)
     2. moveIndex (Object) : The index of the item to move.          (required)
@@ -42,6 +48,9 @@ export function arrayMove(array, moveIndex, toIndex) {
   return array
 }
 
+/* 
+  Insert item into array at specified position
+*/
 export const arrayInsert = (arr, index, newItem) => [
   // part of the array before the specified index
   ...arr.slice(0, index),
@@ -51,7 +60,14 @@ export const arrayInsert = (arr, index, newItem) => [
   ...arr.slice(index)
 ]
 
+/* 
+  Convert JSON to base64url encoded string
+*/
 export const jsonToBase64url = json => base64url(JSON.stringify(json))
+
+/* 
+  Convert base64url encoded string to JSON
+*/
 export const base64urlToJson = string => JSON.parse(base64url.decode(string))
 
 /* 
@@ -68,14 +84,23 @@ export function validateObject(object, schema) {
     }, [])
 }
 
+/* 
+  Create image object structure
+*/
 export function createImageObject(name, url) {
   return { name, image: url }
 }
 
+/* 
+  Create row object structure
+*/
 export function createRowObject(name, color, items) {
   return { name, color, items }
 }
 
+/* 
+  Create general structure of Tiermaker component data set
+*/
 export function createDataStructure(images, rows) {
   const rowData = rows.map(rowName => createRowObject(rowName, 'grey', []))
   const imageData = [
@@ -84,6 +109,9 @@ export function createDataStructure(images, rows) {
   return [...imageData, ...rowData]
 }
 
+/* 
+  Create initial Tiermaker component data set (mostly used for debugging)
+*/
 export function createInitialState() {
   const data = []
   const defaultArea = IMAGE_LIST.map((url, i) => {
@@ -100,6 +128,9 @@ export function createInitialState() {
   return data
 }
 
+/* 
+  Validate base64encoded url string based on loose Tiermaker component data set schema
+*/
 export function validateUrlString(string) {
   try {
     const json = base64urlToJson(string)
@@ -111,7 +142,6 @@ export function validateUrlString(string) {
         items: Joi.array()
       })
     )
-
     const result = Joi.validate(json, schema)
     if (!result.error) {
       return true
@@ -139,6 +169,9 @@ export function updateClipboard(string) {
   })
 }
 
+/* 
+  Asynchronously convert a list of Files (see: https://developer.mozilla.org/en-US/docs/Web/API/File) to dataURI strings
+*/
 export function asyncFileReader(file) {
   return new Promise(resolve => {
     const reader = new FileReader()
@@ -146,7 +179,6 @@ export function asyncFileReader(file) {
     reader.readAsDataURL(file)
   })
 }
-
 export function filesToDataURIs(files) {
   return new Promise(resolve => {
     const promises = files.map(file => asyncFileReader(file))

@@ -4,6 +4,10 @@ import { func, number, string } from 'prop-types'
 import React from 'react'
 import SettingsModal from './SettingsModal'
 
+/* 
+  Item Settings
+  Quick menu to change position of rows and a button to open a modal for furhter row customization
+*/
 function ItemSettings({ name, moveRow, rowIndex, totalRows }) {
   const moveRowUp = () => moveRow(name, 'up')
   const moveRowDown = () => moveRow(name, 'down')
