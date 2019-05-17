@@ -22,12 +22,13 @@ const RowContainer = ({
       style={{ backgroundColor: color }}
       html={name}
       onChange={e => changeName(name, e.target.value)}
+      tagName="label"
       className="label"
     />
     <Droppable droppableId={name} direction="horizontal">
       {(provided, snapshot) => (
         <div
-          className={className('content', {
+          className={className('content custom-scrollbar', {
             'content--dragging': snapshot.isDraggingOver
           })}
           {...provided.droppableProps}

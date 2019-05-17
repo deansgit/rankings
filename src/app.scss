@@ -87,14 +87,22 @@ h6 {
   align-items: center;
   justify-content: center;
   height: 100%;
-  width: 120px;
+  min-width: 120px;
+  width: 10%;
   border-right: solid 1px black;
+  text-align: center;
+  font-weight: 500;
+
+  &:focus {
+    cursor: text;
+  }
 }
 
 .content {
   background-color: #232323;
   display: flex;
   width: 100%;
+  overflow-y: hidden;
 
   &--dragging {
     background-color: #1d1d1d;
@@ -371,5 +379,18 @@ h6 {
     align-items: center;
     justify-content: center;
     margin: 20px 0 25px 0;
+  }
+}
+
+.custom-scrollbar {
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: white;
+    // background-color: #000000;
   }
 }

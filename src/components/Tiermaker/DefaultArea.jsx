@@ -9,7 +9,7 @@ const DefaultArea = ({ items }) => (
     <Droppable droppableId="default" direction="horizontal">
       {(provided, snapshot) => (
         <div
-          className={className('default-container__content', {
+          className={className('default-container__content custom-scrollbar', {
             'default-container__content--dragging': snapshot.isDraggingOver
           })}
           {...provided.droppableProps}
