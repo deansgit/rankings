@@ -7,6 +7,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 500;
+}
+
 .app {
   margin: auto;
   width: 70vw;
@@ -265,14 +274,16 @@ body {
 }
 
 .import-form {
-  &__input {
+  &__textarea {
     font-size: 18px;
-    min-height: 30vh;
+    min-height: 35vh;
     width: 100%;
     resize: vertical;
     box-sizing: border-box;
     margin-bottom: 15px;
     padding: 10px;
+    font-family: inherit;
+    line-height: 26px;
   }
 
   &__info-box {

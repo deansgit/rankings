@@ -30,7 +30,7 @@ function ImportForm() {
             <textarea
               value={importString}
               onChange={e => setImportString(e.target.value)}
-              className="import-form__input"
+              className="import-form__textarea"
               placeholder="Paste import string into this area.."
             />
           </div>
