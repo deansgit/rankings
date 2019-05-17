@@ -103,6 +103,7 @@ function Content({ setModalOpen, rowName }) {
             type="text"
             onChange={e => renameRow(e)}
             placeholder={rowName}
+            autoFocus
             className="row-settings-modal__input"
           />
         </div>
