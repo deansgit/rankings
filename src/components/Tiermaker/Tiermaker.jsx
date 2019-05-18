@@ -6,7 +6,7 @@ import {
   RESET,
   SET_DATA
 } from '../../redux/actions'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   base64urlToJson,
   createInitialState,
@@ -15,11 +15,17 @@ import {
   updateClipboard,
   validateUrlString
 } from '../../util'
+import {
+  copyErrorText,
+  copyStatusResetTimer,
+  copySuccessText
+} from '../../constants'
 import { useDispatch, useSelector } from 'react-redux'
 
 import DefaultArea from './DefaultArea'
 import { DragDropContext } from 'react-beautiful-dnd'
 import RowContainer from './RowContainer'
+import className from 'classnames'
 import { navigate } from 'hookrouter'
 import { string } from 'prop-types'
 
@@ -27,6 +33,7 @@ import { string } from 'prop-types'
   Main Tiermaker Component
 */
 function Tiermaker() {
+  const [copyStatus, setCopyStatus] = useState('')
   const dispatch = useDispatch()
   // const data = useSelector(state => state.tiermaker) // somehow this is broken? probably a memo related issue
   const state = useSelector(state => state)
@@ -58,6 +65,24 @@ function Tiermaker() {
   }
   const clearRows = () => dispatch({ type: CLEAR_ALL_ROWS })
 
+  const copyToClipboard = () => {
+    try {
+      updateClipboard(jsonToBase64url(data)).then(() => {
+        setCopyStatus(copySuccessText)
+      })
+    } catch {
+      setCopyStatus(copyErrorText)
+    }
+  }
+
+  useEffect(() => {
+    if (copyStatus) {
+      setTimeout(() => {
+        setCopyStatus('')
+      }, copyStatusResetTimer)
+    }
+  }, [copyStatus])
+
   // useEffect(() => {
   //   navigate(`/t/${jsonToBase64url(data)}`)
   // }, [data])
@@ -77,10 +102,13 @@ function Tiermaker() {
               Save to URL
             </button>
             <button
-              onClick={() => updateClipboard(jsonToBase64url(data))}
-              className="btn"
+              onClick={() => copyToClipboard()}
+              className={className('btn', {
+                'btn--green': copyStatus === copySuccessText,
+                'btn--red': copyStatus === copyErrorText
+              })}
             >
-              Save to clipboard
+              {copyStatus ? copyStatus : 'Save to clipboard'}
             </button>
             <button onClick={() => reset()} className="btn">
               Reset

@@ -24,3 +24,10 @@ export const IMAGE_LIST = [
   'https://i.imgur.com/0EmXish.png',
   'https://i.imgur.com/bHFXkc2.png'
 ]
+
+/* 
+  Constants for copy to clipboard feedback
+*/
+export const copySuccessText = 'Copied!'
+export const copyErrorText = 'Error copying!'
+export const copyStatusResetTimer = 1000
