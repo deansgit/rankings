@@ -180,6 +180,7 @@ h6 {
 
     @media (max-width: 600px) {
       max-width: 75vw;
+      padding-bottom: 0;
     }
   }
 }
@@ -396,6 +397,11 @@ h6 {
     align-items: center;
     justify-content: center;
     margin: 20px 0 25px 0;
+  }
+
+  @media (max-width: 600px) {
+    padding-top: 0;
+    padding-bottom: 0;
   }
 }
 
