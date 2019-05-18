@@ -248,6 +248,14 @@ h6 {
       background-color: #2b47c5 !important;
     }
   }
+
+  @media (min-width: 320px) and (max-width: 480px) {
+    width: 100%;
+
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+  }
 }
 
 .create-form {
