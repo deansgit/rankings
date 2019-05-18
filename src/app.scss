@@ -177,6 +177,10 @@ h6 {
       background-color: #5a5a5a;
       border-radius: 10px;
     }
+
+    @media (max-width: 600px) {
+      max-width: 75vw;
+    }
   }
 }
 
