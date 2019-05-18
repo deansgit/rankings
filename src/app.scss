@@ -20,6 +20,11 @@ h6 {
   margin: auto;
   width: 70vw;
   padding: 20px 0;
+
+  @media (min-width: 320px) and (max-width: 480px) {
+    width: 95vw;
+    padding: 5px 0;
+  }
 }
 
 .container {
